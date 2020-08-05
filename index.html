@@ -1,0 +1,64 @@
+﻿{% extends 'base.html' %}
+
+{% block head %}
+<title>Employee Management System</title>
+<style>
+    table {
+        border-collapse: collapse; 
+        margin-left: auto; 
+        margin-right: auto;
+    }
+    th, td {
+        padding: 5px;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Employees</h1>
+    {% if employees|length == 0 %}
+    <label>No Employees</label>
+    {% else %}
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job</th>
+            <th>Salary</th>
+            <th>Actions</th>
+        </tr>
+        {% for employee in employees %}
+        <tr>
+            <td>{{employee[1]}}</td>
+            <td>{{employee[2]}}</td>
+            <td>{{employee[3]}}</td>
+            <td>{{employee[4]}}</td>
+            <td>
+                <a href="/update/{{employee[2]}}">Update</a>
+                <a href="/delete/{{employee[2]}}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+<br />
+<div>
+    <form action="/" method="POST">
+        <input type="text" id="name" name="name" value="Name" size="10" />
+        <input type="text" id="email" name="email" value="Email" size="10" />
+        <input type="text" id="job" name="job" value="Job" size="10" />
+        <input type="text" id="salary" name="salary" value="Salary" size="10" />
+        <input type="submit" value="Add" />
+    </form>
+</div>
+<div>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label>Add file of employees&nbsp</label>
+        <input type="file" id="file" name="file" accept=".txt" />
+        <input type="submit" value="Add" />
+    </form>
+</div>
+{% endblock %}
